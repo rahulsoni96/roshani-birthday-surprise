@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>404 - Page Not Found</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Serif+Display&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1c1124;--ink:#fff3ea;--rose:#ff5d8f;--gold:#ffc65c;--plum:#33204a;--paper:#fff6e8;--pen:#3b2a52;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1124}}
+:root[data-theme="dark"]{--bg:#1c1124}
+*{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;overflow-x:hidden}
+.screen{display:none;min-height:100vh;padding:28px 22px;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px}
+.screen.on{display:flex}
+h1,h2{font-family:'DM Serif Display',Georgia,serif;font-weight:400;margin:0;line-height:1.1}
+button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:14px 26px;background:var(--rose);color:#fff;cursor:pointer;min-height:48px}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+button.alt{background:var(--plum);color:var(--ink)}
+/* 404 */
+#s404{background:#f1f1f1;color:#333;font-family:system-ui,sans-serif}
+#s404 h1{font-family:system-ui,sans-serif;font-size:72px;font-weight:300;color:#555}
+#s404 p{max-width:34ch;color:#666;margin:0}
+#s404 small{color:#999}
+#s404 button{background:#1a73e8;border-radius:4px;padding:10px 22px}
+.term{background:#0a0a0a;color:#3dff7a;font-family:ui-monospace,Menlo,monospace;text-align:left;padding:18px;border-radius:10px;width:min(92vw,420px);min-height:170px;font-size:13px;line-height:1.7;white-space:pre-wrap}
+/* countdown */
+.sub{max-width:32ch;opacity:.85}
+.cd{display:flex;gap:10px}
+.cd div{background:var(--plum);border-radius:14px;padding:14px 8px;min-width:68px}
+.cd b{display:block;font-family:'DM Serif Display',serif;font-size:34px;font-weight:400;color:var(--gold)}
+.cd span{font-size:12px;opacity:.7}
+.dodge-wrap{height:140px;width:min(92vw,360px);position:relative;display:flex;align-items:center;justify-content:center}
+#open{transition:transform .25s}
+/* letter */
+.paper{background:var(--paper);color:var(--pen);width:min(94vw,440px);padding:26px 24px;border-radius:6px;text-align:left;font-family:'Caveat',cursive;font-size:25px;line-height:1.45;box-shadow:0 14px 40px rgba(0,0,0,.45);transform:rotate(-1.2deg);background-image:repeating-linear-gradient(transparent 0 35px,#e9d7bd 35px 36px)}
+.paper p{margin:0 0 6px;opacity:0;transition:opacity .9s}
+.paper p.show{opacity:1}
+.paper.n{font-size:21px;line-height:1.5;transform:none;margin:10px 0}
+.paper.n p{opacity:1;margin:0 0 14px}
+/* question */
+.row{display:flex;gap:14px;align-items:center;justify-content:center;min-height:120px;width:min(92vw,380px);position:relative}
+#yes{transition:transform .2s}
+#no{transition:transform .2s}
+/* cake */
+.cake{font-size:96px;position:relative;line-height:1;cursor:pointer;user-select:none}
+.flame{position:absolute;top:-34px;left:50%;transform:translateX(-50%);font-size:44px;animation:fl .5s infinite alternate}
+.flame.out{display:none}
+@keyframes fl{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-50%) scale(1.15) rotate(4deg)}}
+#fin h1{font-size:clamp(38px,11vw,64px);color:var(--gold)}
+#fin .msg{max-width:36ch;font-size:18px;line-height:1.6}
+#prank{background:var(--plum);padding:14px 18px;border-radius:14px;max-width:34ch;font-size:16px}
+#cv{position:fixed;inset:0;pointer-events:none;z-index:5}
+.barwrap{width:min(88vw,360px);height:14px;background:var(--plum);border-radius:99px;overflow:hidden}
+#scBar{height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--gold));transition:width .15s}
+.big{font-family:'DM Serif Display',serif;font-size:72px;color:var(--gold);line-height:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(94vw,420px)}
+.rc{border-radius:16px;background:var(--plum);color:var(--ink);min-height:110px;padding:14px;font-weight:400;font-size:14px;line-height:1.45;transition:background .3s}
+.rc.open{background:var(--rose);color:#fff}
+.field{position:relative;width:min(94vw,420px);height:46vh;background:var(--plum);border-radius:18px;overflow:hidden;touch-action:manipulation}
+.fh{position:absolute;top:-40px;font-size:34px;cursor:pointer;animation:fall 3.2s linear forwards;user-select:none}
+@keyframes fall{to{transform:translateY(55vh)}}
+.cp{min-height:80px;font-size:15px;font-weight:700}
+.hrt{position:fixed;bottom:-30px;font-size:22px;pointer-events:none;animation:up 6s linear forwards;z-index:4}
+@keyframes up{to{transform:translateY(-110vh) rotate(20deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.hrt{display:none}.flame{animation:none}.paper p{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<section class="screen on" id="s404">
+  <h1>404</h1>
+  <p><b>Birthday not found.</b><br>Aaj kisi ka birthday nahi hai. Is page par dekhne layak kuch nahi.</p>
+  <small id="hint">ERR_BIRTHDAY_NOT_FOUND</small>
+  <button id="reload">Page refresh karo</button>
+</section>
+
+<section class="screen" id="hack">
+  <div class="term" id="term"></div>
+</section>
+
+<section class="screen" id="count">
+  <h2 id="cTitle">Roshani ke liye kuch ban raha hai...</h2>
+  <p class="sub" id="cSub">Itne waqt baad sab khulega. Tab tak sabr!</p>
+  <div class="cd" id="cd"></div>
+  <div class="dodge-wrap"><button id="open">Mujhse intezaar nahi hota</button></div>
+  <small id="dtxt" style="opacity:.6"></small>
+</section>
+
+<section class="screen" id="letter">
+  <div class="paper" id="paper"></div>
+  <button id="next">Aage padho</button>
+</section>
+
+<section class="screen" id="scan">
+  <h2>Compatibility check 💘</h2>
+  <p class="sub">Roshani aur main, kitne match karte hain?</p>
+  <div class="barwrap"><div id="scBar"></div></div>
+  <div class="big" id="scNum">0%</div>
+  <p class="sub" id="scTxt"></p>
+  <button id="scBtn" style="display:none">Chalo aage</button>
+</section>
+
+<section class="screen" id="why">
+  <h2>Tumhe pyaar karne ki 6 wajah</h2>
+  <p class="sub">Har card par tap karo. Poori list to bahut lambi hai, ye bas shuruaat hai.</p>
+  <div class="grid">
+    <button class="rc" data-t="Tumhari muskurahat. Din kaisa bhi ho, ek baar dikh jaaye to sab theek lagta hai."><span>Tap 💗</span></button>
+    <button class="rc" data-t="Tumhari aankhein. Baat karte karte main kho jaata hun, tumne notice kiya?"><span>Tap 💗</span></button>
+    <button class="rc" data-t="Jab tum gussa hoti ho. Sach bolun? Tab bhi bahut cute lagti ho 😌"><span>Tap 💗</span></button>
+    <button class="rc" data-t="Tumhare dil se likhe lambe messages. Har shabd seedha dil tak pahunchta hai."><span>Tap 💗</span></button>
+    <button class="rc" data-t="Tumhare saath ghar jaisa lagta hai, chahe main kahin bhi hun."><span>Tap 💗</span></button>
+    <button class="rc" data-t="Library wali surprise... mauka mila to main dobara karunga 😏"><span>Tap 💗</span></button>
+  </div>
+  <button id="whyBtn" style="display:none">Aakhri sawaal</button>
+</section>
+
+<section class="screen" id="ask">
+  <h2>Ek sawaal, sach sach batana</h2>
+  <p class="sub">Kya tum duniya ki sabse pyaari ladki ho?</p>
+  <div class="row"><button id="yes">Haan</button><button id="no" class="alt">Nahi</button></div>
+  <small id="askHint" style="opacity:.6"></small>
+</section>
+
+<section class="screen" id="qs">
+  <h2 id="qQ"></h2>
+  <div class="row" id="qA"></div>
+  <small id="qH" style="opacity:.8;min-height:20px"></small>
+</section>
+
+<section class="screen" id="wish">
+  <h2>Ab ek wish maango</h2>
+  <p class="sub">Aankhein band karo, dil se kuch maango, phir keke par tap karke phoonk maaro.</p>
+  <div class="cake" id="cake"><span class="flame" id="flame">🔥</span>🎂</div>
+</section>
+
+<section class="screen" id="game">
+  <h2>Mera dil pakdo 💘</h2>
+  <p class="sub" id="gTxt">Girte hue dil par tap karo. 10 pakad liye to tum jeeti!</p>
+  <div class="field" id="field"></div>
+  <button id="gBtn" style="display:none">Aage chalo</button>
+</section>
+
+<section class="screen" id="gift">
+  <h2>Tumhare liye ek gift aaya hai 🎁</h2>
+  <div class="cake" id="giftBox">🎁</div>
+  <p class="sub" id="gfTxt">Kholne ke liye tap karo</p>
+  <button id="gfBtn" style="display:none">Dekho kya mila</button>
+</section>
+
+<section class="screen" id="note">
+  <div class="paper n">
+    <p>Happy Birthday, princess 🎉🎂 Tum mere liye kitne special ho, main words mein nahi bata paunga. Tumhare saath bitaye har pal ko main yaad rakhta hoon, mere liye wo unforgettable moments hain ✨. Aaj ka din tumhare liye khushiyon se bhara ho, aur tumhare har sapne sach ho. Tumhare future mein success, pyaar aur khushi ki koi kami na ho. Main tumhare liye hamesha yahaan hoon, aur hum saath mein aur bhi memories banayenge. Happy Birthday my love 💕🎁</p>
+    <p>Aaj ka din mere liye bahut khaas hai, kyunki aaj wo din hai jab tum is duniya mein aayi thi... aur mujhe lagta hai is duniya ko tabhi thoda aur khoobsurat bana diya gaya tha 🌸. Aur thanks mummy-papa ko bhi, jo unka us din mood tha, warna mujhe itni khubsurat aur understanding ladki kahaan se milti 😅😅</p>
+    <p>Main ye likhte hue soch raha hoon ki tum mere liye kitni important ho... Kabhi kabhi samajh nahi aata kaise express karun, par tum meri life ka wo hissa ban gayi ho jiske bina sab adhura lagta hai, ajeeb sa feel hota hai... samjhi jaan 🥺 Roshani, tum sirf meri girlfriend nahi ho, meri peace ho 🕊️, meri support ho 🤝... aur wo insaan ho jisse main apne dil ki har baat aur feelings share karta hoon, aur har din dil se respect karta hoon. Teri smile wo cheez hai jisse mera din accha ho jaata hai 😊. Aur bhi bahut kuch hai, jaise tumhari photo aur saath spend kiye hue moments.</p>
+    <p>Main genuinely thankful hoon ki tum meri life mein ho. Maine kabhi kisi ko itna deeply admire nahi kiya jitna tumhe karta hoon, meri princess 👑. Main chahta hoon tum hamesha apni simplicity aur sweetness ke saath aise hi raho aur khush raho. Tum deserve karti ho is duniya ka sabse accha pyaar, sabse achhi life, aur har wo cheez jo tumhe khushi aur sukoon de 🌷.</p>
+    <p>Aaj ke din bas ye kehna chahta hoon... Thank you for being you, Roshani ❤️ Aur Happy Birthday, meri jaan ❤️</p>
+    <p>Khush rehna, apna khayal rakhna, aur hamesha yaad rakhna... koi hai jo tumse dil se pyaar karta hai aur har dua mein tumhe yaad karta hai 🤲. Isse yaad aaya, hum ek saath mandir gaye the 🙏, kya mast moment tha. Aur bhi bahut kuch hai, par samajh nahi aa raha kaise bolun. Bas tumhari life theek ho jaaye, jaisa tum chahti ho waisa ho jaaye... Love you ❣️💝</p>
+    <p style="text-align:right">— Rahul</p>
+  </div>
+  <button id="noteBtn">Aage</button>
+</section>
+
+<section class="screen" id="fin">
+  <h1>Happy Birthday, Roshani!</h1>
+  <p class="msg">School ke us pehle din se aaj tak, tumne meri zindagi ko bahut khubsurat bana diya. Tum hansti rehna, bas yahi chahiye.</p>
+  <div id="prank">PS: Tumne gift ke liye mana kiya tha na? Isliye gift nahi laya. Uski jagah ye poori website bana di 😜</div>
+  <p class="sub">Gift ki jagah ye 4 love coupons, bilkul free. Tap karke redeem karo 😌</p>
+  <div class="grid">
+    <button class="rc cp" data-t="Redeemed ✓ Ek lamba tight hug, jab bhi chaho">🤗 Ek lamba hug</button>
+    <button class="rc cp" data-t="Redeemed ✓ Ek poora din tumhari marzi, no arguing">👑 Tumhari marzi ka din</button>
+    <button class="rc cp" data-t="Redeemed ✓ Ek gussa maaf, bas aise hi mat try karna 😜">🙈 Ek gussa maaf</button>
+    <button class="rc cp" data-t="Redeemed ✓ Ek date, jahan tum chaho. Treat meri taraf se">🍫 Ek date, treat meri</button>
+  </div>
+  <p style="font-family:'Caveat',cursive;font-size:30px;margin:0">Hamesha tumhara, <span id="from"></span> ❤️</p>
+  <button class="alt" id="again">Phir se dekho</button>
+</section>
+
+<script>
+// ===== Yahan badlo =====
+var NAME = "Roshani";
+var FROM = "Rahul";
+var BDAY = new Date("2026-10-09T00:00:00"); // birthday ki date aur time
+// =======================
+var $ = function(i){return document.getElementById(i)};
+function go(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('on')});$(id).classList.add('on');window.scrollTo(0,0)}
+$('from').textContent = FROM;
+
+// 1. fake 404
+var n = 0;
+var hints = ["ERR_BIRTHDAY_NOT_FOUND","Phir se try karo... shayad kuch ho","Hmm, server ko kuch ajeeb lag raha hai...","Ek minute, kuch to gadbad hai 👀"];
+$('reload').onclick = function(){
+  n++;
+  $('hint').textContent = hints[Math.min(n,3)];
+  document.title = n<3 ? "404 - Page Not Found" : "Wait...";
+  if(n>=3){runHack()}
+};
+
+// 2. fake hacking
+function runHack(){
+  go('hack');
+  var lines = ["> 404 error bypass kar rahe hain...","> database access: OK","> '"+NAME+"' naam dhoondh rahe hain...","> MIL GAYA!","> warning: sabse pyaari ladki detected","> countdown load ho raha hai..."];
+  var i = 0, t = $('term'); t.textContent = "";
+  var iv = setInterval(function(){
+    t.textContent += lines[i] + "\n"; i++;
+    if(i >= lines.length){clearInterval(iv);setTimeout(function(){go('count');startCount()},900)}
+  },700);
+}
+
+// 3. countdown
+var cdIv;
+function startCount(){
+  document.title = "For " + NAME;
+  tick(); clearInterval(cdIv); cdIv = setInterval(tick,1000);
+}
+function tick(){
+  var d = BDAY - new Date();
+  if(d <= 0){
+    $('cd').innerHTML = "";
+    $('cTitle').textContent = "Aaj hai woh din! 🎉";
+    $('cSub').textContent = "Ab koi intezaar nahi.";
+    $('open').textContent = "Kholo";
+    dodges = 99; return;
+  }
+  var s = Math.floor(d/1000), D = Math.floor(s/86400), H = Math.floor(s%86400/3600), M = Math.floor(s%3600/60), S = s%60;
+  $('cd').innerHTML = [[D,"din"],[H,"ghante"],[M,"minute"],[S,"second"]].map(function(x){return "<div><b>"+x[0]+"</b><span>"+x[1]+"</span></div>"}).join("");
+}
+var dodges = 0;
+var dmsg = ["Arre, pakad ke dikhao!","Itni jaldi? Pehle mujhe pakdo 😝","Almost! Bas ek aur baar...","Theek hai, tum jeeti. Khol lo."];
+function dodge(e){
+  if(dodges >= 3) return;
+  e.preventDefault();
+  dodges++;
+  var b = $('open');
+  b.style.transform = "translate("+((Math.random()*160)-80)+"px,"+((Math.random()*80)-40)+"px)";
+  b.textContent = dmsg[dodges-1];
+  if(dodges >= 3){setTimeout(function(){b.style.transform="none";b.textContent=dmsg[3]},700)}
+}
+$('open').addEventListener('mouseenter',function(e){if(dodges<3 && matchMedia('(hover:hover)').matches)dodge(e)});
+$('open').addEventListener('click',function(e){
+  if(dodges < 3){dodge(e);return}
+  clearInterval(cdIv); startLetter();
+});
+
+// 4. letter
+var L = [
+ "Meri Roshani,",
+ "Yaad hai school mein hum pehli baar mile the? Tab pata nahi tha ki ek din tum meri zindagi ka sabse khaas hissa ban jaogi.",
+ "Tumse milne ke baad bahut kuch badal gaya. Main pehle jaisa nahi raha, aur sach kahun to ye badlav achha hai.",
+ "Library ki wo mulaqat aur wo chhoti si surprise, aaj bhi yaad karke muskurahat aa jaati hai 🙈",
+ "Sach bolun? Mujhe nahi pata tum kab itni khaas ho gayi. Bas itna pata hai ki tumhare bina sab kuch thoda adhoora lagta hai.",
+ "Aur haan, jab tum muskurati ho na, meri duniya ek second ke liye ruk jaati hai. Ye bahut unfair hai 😌",
+ "Kabhi tum door hoti ho to bhi dil tumhare paas hi rehta hai. Ye bhi tumhari hi galti hai.",
+ "Aaj tumhara din hai. Bas itna chahta hun ki tum hamesha khush raho, aur main us khushi ki wajah banta rahun.",
+ "Happy Birthday, meri jaan. Mujhe chun'ne ke liye shukriya ❤️",
+ "— " + FROM
+];
+var li = 0;
+function startLetter(){
+  go('letter'); li = 0; $('paper').innerHTML = "";
+  $('next').textContent = "Aage padho"; showLine();
+}
+function showLine(){
+  var p = document.createElement('p'); p.textContent = L[li]; $('paper').appendChild(p);
+  requestAnimationFrame(function(){requestAnimationFrame(function(){p.classList.add('show')})});
+  li++;
+  if(li >= L.length) $('next').textContent = "Ek aakhri cheez...";
+}
+$('next').onclick = function(){ if(li < L.length) showLine(); else startScan() };
+
+// 4b. compatibility scan (prank)
+function startScan(){
+  go('scan'); $('scBtn').style.display = 'none'; $('scTxt').textContent = "Scan chal raha hai...";
+  var v = 0, bar = $('scBar'), num = $('scNum');
+  var iv = setInterval(function(){
+    v += v < 100 ? 4 : 37;
+    num.textContent = v + "%"; bar.style.width = Math.min(v,100) + "%";
+    if(v > 100 && v < 200) $('scTxt').textContent = "Hmm, 100% se zyada? Ye to possible nahi...";
+    if(v >= 300){
+      clearInterval(iv); num.textContent = "∞%";
+      $('scTxt').textContent = "ERROR: pyaar ka limit cross ho gaya. System ro raha hai 😳";
+      $('scBtn').style.display = 'inline-block'; boom(50);
+    }
+  },160);
+}
+$('scBtn').onclick = function(){ go('why') };
+
+// 4c. reasons
+var opened = 0;
+document.querySelectorAll('.rc').forEach(function(c){
+  c.onclick = function(){
+    if(c.classList.contains('open')) return;
+    c.classList.add('open'); c.querySelector('span').textContent = c.dataset.t; opened++;
+    if(opened >= 6){ $('whyBtn').style.display = 'inline-block'; boom(60) }
+  };
+});
+$('whyBtn').onclick = function(){ go('game'); startGame() };
+
+// 4d. catch-the-heart game
+var caught = 0, gIv;
+var gmsg = ["Ek!","Do! Tez ho tum","Teen, aur pakdo","Chaar, nishana pakka hai","Paanch, aadha dil mera","Chhe!","Saat, bas thoda aur","Aath, kaafi cute ho tum","Nau! Ek aur","Das! Poora dil tumhara 😍"];
+function startGame(){
+  caught = 0; $('field').innerHTML = ""; $('gBtn').style.display = 'none';
+  $('gTxt').textContent = "Girte hue dil par tap karo. 10 pakad liye to tum jeeti!";
+  clearInterval(gIv);
+  gIv = setInterval(function(){
+    if(caught >= 10) return;
+    var h = document.createElement('div'); h.className = 'fh'; h.textContent = ["💗","💖","💘","❤️"][Math.floor(Math.random()*4)];
+    h.style.left = (Math.random()*82+4) + "%";
+    h.onpointerdown = function(){
+      if(h.dataset.d) return; h.dataset.d = 1; h.remove(); caught++;
+      $('gTxt').textContent = gmsg[caught-1];
+      if(caught >= 10){ clearInterval(gIv); $('gBtn').style.display = 'inline-block'; boom(90) }
+    };
+    $('field').appendChild(h); setTimeout(function(){h.remove()},3300);
+  },480);
+}
+$('gBtn').onclick = function(){ go('ask') };
+
+// 6b. fake gift
+var gfBusy = false;
+$('giftBox').onclick = function(){
+  if(gfBusy) return; gfBusy = true; var v = 0;
+  var iv = setInterval(function(){
+    v += 9; if(v > 99) v = 99;
+    $('gfTxt').textContent = "Gift load ho raha hai... " + v + "%";
+    if(v === 99){
+      clearInterval(iv);
+      setTimeout(function(){$('gfTxt').textContent = "Network slow hai, ruko zara..."},900);
+      setTimeout(function(){$('gfTxt').textContent = "ERROR: Gift not found. Rahul ne kuch laya hi nahi 😜"; $('gfBtn').style.display = 'inline-block'},2600);
+    }
+  },200);
+};
+$('gfBtn').onclick = function(){ go('note') };
+$('noteBtn').onclick = function(){ go('fin'); boom(220); setTimeout(function(){boom(160)},900) };
+document.querySelectorAll('.cp').forEach(function(c){
+  c.onclick = function(){ c.textContent = c.dataset.t; c.style.background = 'var(--rose)'; c.style.color = '#fff'; boom(25) };
+});
+
+// 5. question with runaway No
+var noN = 0, yesScale = 1;
+var noTxt = ["Nahi","Pakka?","Soch lo ek baar","Galat button hai ye 😏","Haan dabao na plz"];
+function runNo(){
+  noN++; yesScale += 0.28;
+  $('yes').style.transform = "scale("+yesScale+")";
+  $('no').textContent = noTxt[Math.min(noN,noTxt.length-1)];
+  $('no').style.transform = "translate("+((Math.random()*140)-70)+"px,"+((Math.random()*90)-10)+"px) scale("+Math.max(.5,1-noN*.1)+")";
+  $('askHint').textContent = noN > 2 ? "Yahan sirf ek hi sahi jawab hai 😄" : "";
+}
+$('no').addEventListener('mouseenter',function(){if(matchMedia('(hover:hover)').matches)runNo()});
+$('no').addEventListener('click',runNo);
+$('yes').onclick = function(){ boom(80); go('qs'); qi = 0; qStep() };
+
+// 5b. rigged mini quiz
+var qi = 0;
+function mk(t, alt){ var b = document.createElement('button'); b.textContent = t; if(alt) b.className = 'alt'; $('qA').appendChild(b); return b }
+function nextQ(){ qi++; if(qi > 2) { go('wish') } else qStep() }
+function qStep(){
+  var a = $('qA'), h = $('qH'); a.innerHTML = ""; h.textContent = "";
+  if(qi === 0){
+    $('qQ').textContent = "Quiz time! Rahul aur Roshani me zyada cute kaun?";
+    var b1 = mk("Rahul 😎", true), b2 = mk("Roshani 😍"), n = 0, t = ["Rahul 😎","Pakka?","Sach me?","Theek hai, main bhaag raha hun 🏃"];
+    var run = function(){ n++; b1.textContent = t[Math.min(n,3)];
+      b1.style.transform = "translate("+((Math.random()*120)-60)+"px,"+((Math.random()*80)-10)+"px) scale("+Math.max(.5,1-n*.12)+")";
+      h.textContent = n > 1 ? "Is button ko bhi sharm aa rahi hai 😄" : "" };
+    b1.onclick = run;
+    b1.addEventListener('mouseenter',function(){ if(matchMedia('(hover:hover)').matches) run() });
+    b2.onclick = function(){ h.textContent = "Sahi jawab! Roshani 😍"; boom(40); setTimeout(nextQ,1000) };
+  } else if(qi === 1){
+    $('qQ').textContent = "Rahul ko kitna miss karti ho? Slider hilao";
+    var s = document.createElement('input'); s.type = 'range'; s.min = 0; s.max = 100; s.value = 40;
+    s.style.cssText = "width:min(80vw,320px);accent-color:#ff5d8f"; a.appendChild(s);
+    var done = false;
+    s.oninput = function(){ if(done) return; done = true; s.value = 100;
+      h.textContent = "Slider ko bhi pata hai sahi jawab: bahut zyada ♾️"; boom(40); setTimeout(nextQ,1500) };
+  } else {
+    $('qQ').textContent = "Birthday girl ko sabse pehle kya chahiye?";
+    ["Ek hug 🤗","Ek kiss 😘","Dono 😏"].forEach(function(x,i){
+      var b = mk(x, i < 2); b.onclick = function(){ h.textContent = "Theek hai, dono milega. Rahul ko bata dena 😏"; boom(50); setTimeout(nextQ,1500) };
+    });
+  }
+}
+
+// 6. wish
+$('cake').onclick = function(){
+  $('flame').classList.add('out');
+  setTimeout(function(){go('gift');boom(100)},500);
+};
+$('again').onclick = function(){location.reload()};
+setInterval(function(){
+  if(!$('fin').classList.contains('on')) return;
+  var h = document.createElement('div'); h.className = 'hrt';
+  h.textContent = ["❤️","💗","💖","💕"][Math.floor(Math.random()*4)];
+  h.style.left = Math.random()*95 + "vw";
+  document.body.appendChild(h); setTimeout(function(){h.remove()},6000);
+},450);
+
+// confetti
+var cv = $('cv'), cx = cv.getContext('2d'), P = [], running = false;
+function size(){cv.width = innerWidth; cv.height = innerHeight}
+size(); addEventListener('resize',size);
+function boom(k){
+  var c = ["#ff5d8f","#ffc65c","#fff3ea","#7be0c3","#9d7bff"];
+  for(var i=0;i<k;i++) P.push({x:innerWidth/2,y:innerHeight*0.55,vx:(Math.random()-.5)*14,vy:-Math.random()*15-3,r:Math.random()*6+3,c:c[i%5],a:1});
+  if(!running){running = true; loop()}
+}
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  P = P.filter(function(p){return p.a > 0.02});
+  P.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.a-=.008;cx.globalAlpha=p.a;cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.r,p.r*1.6)});
+  if(P.length) requestAnimationFrame(loop); else {running = false; cx.clearRect(0,0,cv.width,cv.height)}
+}
+</script>
+</body>
+</html>
